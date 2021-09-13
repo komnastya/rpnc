@@ -8,8 +8,6 @@ def test_calc():
     with pytest.raises(ArgError):
         calc([])
     with pytest.raises(ArgError):
-        calc([1])
-    with pytest.raises(ArgError):
         calc(["+"])
     with pytest.raises(ArgError):
         calc([1, "+"])
@@ -18,6 +16,7 @@ def test_calc():
     with pytest.raises(ArgError):
         calc([1, 2, "+", "+"])
 
+    assert calc([1]) == 1
     assert calc([3, 2, "+"]) == 5
     assert calc([3, 2, "-"]) == 1
     assert calc([3, 2, "*"]) == 6
