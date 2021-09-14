@@ -12,5 +12,5 @@ class ArgError(ValueError):
 
 
 class ParseError(ValueError):
-    # An error which signals that a string cannot be parsed to argument list.
+    """An error which signals that a string cannot be parsed to argument list."""
     pass
