@@ -10,9 +10,12 @@ def parse(s: str) -> ArgList:
     start = 0
     for i, c in enumerate(s + "\0"):
         char = ord(c)
-        is_space = char in [32, 44]  # пробел или запятая как разделитель
+        is_space = char in [32, 44]
         is_digit = 48 <= char <= 57
         is_operator = char in [42, 43, 45, 47]
+
+        def error_message():
+            return f'Error at index {i}, unexpected char "{c}"'
 
         if state == S_INITIAL:
             if char == 0 or is_space:
@@ -29,7 +32,7 @@ def parse(s: str) -> ArgList:
                 args.append(s[i])
                 continue
 
-            raise ParseError(f"Error at index {i}")
+            raise ParseError(error_message())
 
         if state == S_NUM:
             if char == 0 or is_space:
@@ -47,15 +50,8 @@ def parse(s: str) -> ArgList:
                 args.append(s[i])
                 continue
 
-            raise ParseError(f"Error at index {i}")
+            raise ParseError(error_message())
 
         assert False  # Unreachable code.
 
     return args
-
-
-print(parse("12 8 + 4 / 10 * "))  # [12, 8, '+', 4, '/', 10]
-print(parse("20,8,+,4,/,"))  # [20, 8, '+', 4, '/'] = 5
-print(parse("20, 8, +, 4, /, "))  # [20, 8, '+', 4, '/'] = 5
-print(parse("20 5 / * 10 "))  # [20, 5.2, '/', '*', 10.1 ] = 40.4
-print(parse("20 5 / 10 * / 2"))  # [20, 5.2, '/', '*', 10.1 ] = 40.4
