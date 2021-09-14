@@ -1,7 +1,7 @@
 from typing import List, Literal, Union
 
 Operator = Literal["+", "-", "*", "/"]
-Arg = Union[float, Operator]
+Arg = Union[int, float, Operator]
 ArgList = List[Arg]
 
 
