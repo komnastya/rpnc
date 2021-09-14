@@ -17,6 +17,7 @@ def test_calc():
         calc([1, 2, "+", "+"])
 
     assert calc([1]) == 1
+    assert calc([1.1]) == 1.1
     assert calc([3, 2, "+"]) == 5
     assert calc([3, 2, "-"]) == 1
     assert calc([3, 2, "*"]) == 6
