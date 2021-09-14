@@ -1,7 +1,7 @@
 import pytest
 
 from calc import calc
-from types import ArgError
+from mytypes import ArgError
 
 
 def test_calc():

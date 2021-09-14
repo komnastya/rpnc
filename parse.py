@@ -1,4 +1,4 @@
-from types import ArgList
+from mytypes import ArgList
 
 
 def parse(s: str) -> ArgList:

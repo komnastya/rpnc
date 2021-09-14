@@ -5,7 +5,7 @@ Arg = Union[float, Operator]
 ArgList = List[Arg]
 
 class ArgError(ValueError):
-    # An error which signals that an argument list is invalid.
+    """An error which signals that an argument list is invalid."""
     pass
 
 class ParseError(ValueError):
