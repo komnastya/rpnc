@@ -1,6 +1,7 @@
 from calc import calc
 from mytypes import ArgError, ParseError
 from parse_exp import parse_exp
+from print_exp import print_exp
 
 print("Hello!")
 print("Welcome to the calculator!")
@@ -16,10 +17,13 @@ def main():
             break
         else:
             try:
-                print(f"The result of '{input_exp}' is {calc(parse_exp(input_exp))}")
-            except (ParseError, ArgError) as error:
+                input_exp = parse_exp(input_exp)
+                print(f"The result of '{print_exp(input_exp)}' is {calc(input_exp)}")
+            except ParseError as error:
                 print(error)
                 print("Please, enter correct expression")
+            except ArgError as error:
+                print(error)  # TODO
 
 
 main()
