@@ -6,6 +6,9 @@ from mytypes import Arg, ArgError
 def calc(args: Iterable[Arg]) -> Union[int, float]:
     stack = []
     for arg in args:
+        def error_message():
+            return "The input expression is invalid"
+
         if type(arg) == int or type(arg) == float:
             stack.append(arg)
         else:
@@ -30,7 +33,7 @@ def calc(args: Iterable[Arg]) -> Union[int, float]:
                 c = b / a
                 stack.append(c)
             else:
-                raise ArgError
+                raise ArgError(error_message())
     if len(stack) != 1:
-        raise ArgError
+        raise ArgError(error_message())
     return stack[0]
