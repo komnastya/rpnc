@@ -4,7 +4,7 @@ S_INITIAL = 0
 S_NUM = 1
 
 
-def parse(s: str) -> ArgList:
+def parse_exp(s: str) -> ArgList:
     args = []
     state = S_INITIAL
     start = 0
