@@ -17,8 +17,8 @@ def main():
             break
         else:
             try:
-                input_exp = parse_exp(input_exp)
-                print(f"The result of '{print_exp(input_exp)}' is {calc(input_exp)}")
+                parsed_exp = parse_exp(input_exp)
+                print(f"The result of '{print_exp(parsed_exp)}' is {calc(parsed_exp)}")
             except ParseError as error:
                 print(error)
                 print("Please, enter correct expression")
