@@ -18,7 +18,11 @@ def parse_exp(s: str) -> ArgList:
         is_dot = char == 46
 
         def error_message():
-            return f'Error at index {i}, unexpected char "{c}"'
+            if char == 0:
+                char_name = f"end of string"
+            else:
+                char_name = f'char "{c}"'
+            return f"Error at index {i}, unexpected {char_name}"
 
         if state == S_INITIAL:
             if char == 0 or is_space:

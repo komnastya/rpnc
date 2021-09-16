@@ -20,11 +20,13 @@ def test_parse():
         parse_exp("1 + 1 = ")
     with pytest.raises(ParseError, match=r'Error at index 0, unexpected char "I"'):
         parse_exp("I want to calculate 2 : 2")
-    with pytest.raises(ParseError, match=r'Error at index 3, unexpected char "."'):
+    with pytest.raises(ParseError, match=r'Error at index 3, unexpected char "\."'):
         parse_exp("1.1.")
-    with pytest.raises(ParseError, match=r'Error at index 2, unexpected char "."'):
+    with pytest.raises(ParseError, match=r'Error at index 2, unexpected char "\."'):
         parse_exp("1..0")
-    with pytest.raises(ParseError, match=r'Error at index 0, unexpected char "."'):
+    with pytest.raises(ParseError, match=r'Error at index 0, unexpected char "\."'):
         parse_exp(".1")
-    with pytest.raises(ParseError, match=r'Error at index 4, unexpected char "."'):
+    with pytest.raises(ParseError, match=r"Error at index 2, unexpected end of string"):
+        parse_exp("1.")
+    with pytest.raises(ParseError, match=r'Error at index 4, unexpected char "\."'):
         parse_exp("1 + .1")
