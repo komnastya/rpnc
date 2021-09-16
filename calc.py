@@ -6,8 +6,6 @@ from mytypes import Arg, ArgError
 def calc(args: Iterable[Arg]) -> Union[int, float]:
     stack = []
     for arg in args:
-        def error_message():
-            return "The input expression is invalid"
 
         if type(arg) == int or type(arg) == float:
             stack.append(arg)
@@ -28,12 +26,12 @@ def calc(args: Iterable[Arg]) -> Union[int, float]:
                 c = a * b
                 stack.append(c)
             elif arg == "/" and len(stack) >= 2:
-                a = stack.pop()
                 b = stack.pop()
+                a = stack.pop()
                 c = b / a
                 stack.append(c)
             else:
-                raise ArgError(error_message())
+                raise ArgError(f"Not enough arguments for operator {arg}")
     if len(stack) != 1:
-        raise ArgError(error_message())
+        raise ArgError("Not enough operators")
     return stack[0]
