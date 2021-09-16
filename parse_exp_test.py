@@ -9,8 +9,19 @@ def test_parse():
     assert parse_exp("1") == [1]
     assert parse_exp("1+1") == [1, "+", 1]
     assert parse_exp(" 1 + 1 ") == [1, "+", 1]
-    assert parse_exp(" 1 123 - + * / -+*/") == [1, 123, "-", "+", "*", "/", "-", "+", "*", "/"]
+    assert parse_exp(" 1 123 - + * / -+*/") == [
+        1,
+        123,
+        "-",
+        "+",
+        "*",
+        "/",
+        "-",
+        "+",
+        "*",
+        "/",
+    ]
     with pytest.raises(ParseError):
-        parse_exp('1 + 1 = ')
+        parse_exp("1 + 1 = ")
     with pytest.raises(ParseError):
-        parse_exp('I want to calculate 2 : 2')
+        parse_exp("I want to calculate 2 : 2")
