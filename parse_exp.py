@@ -19,8 +19,8 @@ def parse_exp(s: str) -> ArgList:
         is_digit = 48 <= char <= 57
         is_operator = char in [42, 43, 45, 47]
         is_dot = char == 46
-        is_exp = char == [69, 101]
-        is_exp_sign = char == [43, 45]
+        is_exp = char in [69, 101]
+        is_exp_sign = char in [43, 45]
 
         def error_message():
             if char == 0:
