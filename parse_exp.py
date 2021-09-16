@@ -1,7 +1,9 @@
 from mytypes import ArgList, ParseError
 
 S_INITIAL = 0
-S_NUM = 1
+S_NUM_INT_DIGIT = 1
+S_NUM_FRAC_DOT = 2
+S_NUM_FRAC_DIGIT = 3
 
 
 def parse_exp(s: str) -> ArgList:
@@ -13,6 +15,7 @@ def parse_exp(s: str) -> ArgList:
         is_space = char in [32, 44]
         is_digit = 48 <= char <= 57
         is_operator = char in [42, 43, 45, 47]
+        is_dot = char == 46
 
         def error_message():
             return f'Error at index {i}, unexpected char "{c}"'
@@ -23,7 +26,7 @@ def parse_exp(s: str) -> ArgList:
                 continue
 
             if is_digit:
-                state = S_NUM
+                state = S_NUM_INT_DIGIT
                 start = i
                 continue
 
@@ -34,19 +37,48 @@ def parse_exp(s: str) -> ArgList:
 
             raise ParseError(error_message())
 
-        if state == S_NUM:
+        if state == S_NUM_INT_DIGIT:
             if char == 0 or is_space:
                 state = S_INITIAL
                 args.append(int(s[start:i]))
                 continue
 
             if is_digit:
-                state = S_NUM
+                state = S_NUM_INT_DIGIT
                 continue
 
             if is_operator:
                 state = S_INITIAL
                 args.append(int(s[start:i]))
+                args.append(s[i])
+                continue
+
+            if is_dot:
+                state = S_NUM_FRAC_DOT
+                continue
+
+            raise ParseError(error_message())
+
+        if state == S_NUM_FRAC_DOT:
+            if is_digit:
+                state = S_NUM_FRAC_DIGIT
+                continue
+
+            raise ParseError(error_message())
+
+        if state == S_NUM_FRAC_DIGIT:
+            if char == 0 or is_space:
+                state = S_INITIAL
+                args.append(float(s[start:i]))
+                continue
+
+            if is_digit:
+                state = S_NUM_FRAC_DIGIT
+                continue
+
+            if is_operator:
+                state = S_INITIAL
+                args.append(float(s[start:i]))
                 args.append(s[i])
                 continue
 
