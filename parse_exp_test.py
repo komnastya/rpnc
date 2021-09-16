@@ -15,6 +15,10 @@ def test_parse():
     assert parse_exp("-+*/") == ["-", "+", "*", "/"]
     assert parse_exp(" - + * / ") == ["-", "+", "*", "/"]
     assert parse_exp(",-,+,*,/,") == ["-", "+", "*", "/"]
+    assert parse_exp("1e2") == [100.0]
+    assert parse_exp("1E2") == [100.0]
+    assert parse_exp("1.1e2") == [110.0]
+    assert parse_exp("1.1E2") == [110.0]
 
     with pytest.raises(ParseError, match=r'Error at index 6, unexpected char "="'):
         parse_exp("1 + 1 = ")

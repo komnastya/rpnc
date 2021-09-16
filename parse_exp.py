@@ -4,6 +4,9 @@ S_INITIAL = 0
 S_NUM_INT_DIGIT = 1
 S_NUM_FRAC_DOT = 2
 S_NUM_FRAC_DIGIT = 3
+S_NUM_EXP = 4
+S_NUM_EXP_SIGN = 5
+S_NUM_EXP_DIGIT = 6
 
 
 def parse_exp(s: str) -> ArgList:
@@ -16,6 +19,8 @@ def parse_exp(s: str) -> ArgList:
         is_digit = 48 <= char <= 57
         is_operator = char in [42, 43, 45, 47]
         is_dot = char == 46
+        is_exp = char == [69, 101]
+        is_exp_sign = char == [43, 45]
 
         def error_message():
             if char == 0:
@@ -61,6 +66,10 @@ def parse_exp(s: str) -> ArgList:
                 state = S_NUM_FRAC_DOT
                 continue
 
+            if is_exp:
+                state = S_NUM_EXP
+                continue
+
             raise ParseError(error_message())
 
         if state == S_NUM_FRAC_DOT:
@@ -78,6 +87,46 @@ def parse_exp(s: str) -> ArgList:
 
             if is_digit:
                 state = S_NUM_FRAC_DIGIT
+                continue
+
+            if is_operator:
+                state = S_INITIAL
+                args.append(float(s[start:i]))
+                args.append(s[i])
+                continue
+
+            if is_exp:
+                state = S_NUM_EXP
+                continue
+
+            raise ParseError(error_message())
+
+        if state == S_NUM_EXP:
+            if is_digit:
+                state = S_NUM_EXP_DIGIT
+                continue
+
+            if is_exp_sign:
+                state = S_NUM_EXP_SIGN
+                continue
+
+            raise ParseError(error_message())
+
+        if state == S_NUM_EXP_SIGN:
+            if is_digit:
+                state = S_NUM_EXP_DIGIT
+                continue
+
+            raise ParseError(error_message())
+
+        if state == S_NUM_EXP_DIGIT:
+            if char == 0 or is_space:
+                state = S_INITIAL
+                args.append(float(s[start:i]))
+                continue
+
+            if is_digit:
+                state = S_NUM_EXP_DIGIT
                 continue
 
             if is_operator:
