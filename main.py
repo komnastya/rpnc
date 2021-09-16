@@ -26,7 +26,5 @@ def main():
                 print(error)  # TODO
 
 
-main()
-
 if __name__ == "__main__":
     main()
