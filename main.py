@@ -3,13 +3,13 @@ from mytypes import ArgError, ParseError
 from parse_exp import parse_exp
 from print_exp import print_exp
 
-print("Hello!")
-print("Welcome to the calculator!")
-
 
 def main():
+    print("Hello!")
+    print("Welcome to the calculator!")
+
     while True:
-        input_exp = input("Please, input the expression in Reversed Polish Notation: ")
+        input_exp = input("Please, input an expression in Reversed Polish Notation: ")
         if input_exp == "stop":
             print("Good bye!")
             break
