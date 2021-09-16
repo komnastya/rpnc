@@ -28,7 +28,7 @@ def calc(args: Iterable[Arg]) -> Union[int, float]:
             elif arg == "/" and len(stack) >= 2:
                 b = stack.pop()
                 a = stack.pop()
-                c = b / a
+                c = a / b
                 stack.append(c)
             else:
                 raise ArgError(f"Not enough arguments for operator {arg}")
