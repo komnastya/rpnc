@@ -5,15 +5,15 @@ from mytypes import ArgError
 
 
 def test_calc():
-    with pytest.raises(ArgError):
+    with pytest.raises(ArgError, match=r'Not enough operators'):
         calc([])
-    with pytest.raises(ArgError):
+    with pytest.raises(ArgError, match=r'Not enough arguments for operator \+'):
         calc(["+"])
-    with pytest.raises(ArgError):
-        calc([1, "+"])
-    with pytest.raises(ArgError):
+    with pytest.raises(ArgError, match=r'Not enough arguments for operator \*'):
+        calc([1, "*"])
+    with pytest.raises(ArgError, match=r'Not enough operators'):
         calc([1, 2, 3, "+"])
-    with pytest.raises(ArgError):
+    with pytest.raises(ArgError, match=r'Not enough arguments for operator \+'):
         calc([1, 2, "+", "+"])
 
     assert calc([1]) == 1
