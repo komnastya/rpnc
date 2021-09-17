@@ -1,9 +1,10 @@
+from decimal import Decimal
 from typing import Iterable, Union
 
 from mytypes import Arg, ArgError
 
 
-def calc(args: Iterable[Arg]) -> Union[int, float]:
+def calc(args: Iterable[Arg]) -> Union[Decimal]:
     stack = []
     for arg in args:
 
@@ -11,7 +12,7 @@ def calc(args: Iterable[Arg]) -> Union[int, float]:
             if len(stack) < num_args:
                 raise ArgError(f"Not enough arguments for operator {arg}")
 
-        if type(arg) == int or type(arg) == float:
+        if type(arg) == Decimal:
             stack.append(arg)
         else:
             if arg == "+":

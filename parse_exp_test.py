@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pytest
 
 from mytypes import ParseError
@@ -8,25 +10,25 @@ def test_parse():
     assert parse_exp("") == []
     assert parse_exp("1") == [1]
     assert parse_exp("1+1") == [1, "+", 1]
-    assert parse_exp("1.1 + 1.1") == [1.1, "+", 1.1]
-    assert parse_exp("1.1+1.1") == [1.1, "+", 1.1]
-    assert parse_exp("1,1+1,1") == [1, 1, "+", 1, 1]
-    assert parse_exp(" 123 + 456 ") == [123, "+", 456]
+    assert parse_exp("1.1 + 1.1") == [Decimal("1.1"), "+", Decimal("1.1")]
+    assert parse_exp("1.1+1.1") == [Decimal("1.1"), "+", Decimal("1.1")]
+    assert parse_exp("1,1+1,1") == [Decimal(1), Decimal(1), "+", Decimal(1), Decimal(1)]
+    assert parse_exp(" 123 + 456 ") == [Decimal(123), "+", Decimal(456)]
     assert parse_exp("-+*/") == ["-", "+", "*", "/"]
     assert parse_exp(" - + * / ") == ["-", "+", "*", "/"]
     assert parse_exp(",-,+,*,/,") == ["-", "+", "*", "/"]
-    assert parse_exp("1e2") == [100.0]
-    assert parse_exp("1E2") == [100.0]
-    assert parse_exp("1.1e2") == [110.0]
-    assert parse_exp("1.1E2") == [110.0]
-    assert parse_exp("1e+2") == [100.0]
-    assert parse_exp("1E+2") == [100.0]
-    assert parse_exp("1.1e+2") == [110.0]
-    assert parse_exp("1.1E+2") == [110.0]
-    assert parse_exp("1e-2") == [0.01]
-    assert parse_exp("1E-2") == [0.01]
-    assert parse_exp("1.1E-2") == [0.011]
-    assert parse_exp("1.1e-2") == [0.011]
+    assert parse_exp("1e2") == [Decimal(100.0)]
+    assert parse_exp("1E2") == [Decimal(100.0)]
+    assert parse_exp("1.1e2") == [Decimal(110.0)]
+    assert parse_exp("1.1E2") == [Decimal(110.0)]
+    assert parse_exp("1e+2") == [Decimal(100.0)]
+    assert parse_exp("1E+2") == [Decimal(100.0)]
+    assert parse_exp("1.1e+2") == [Decimal(110.0)]
+    assert parse_exp("1.1E+2") == [Decimal(110.0)]
+    assert parse_exp("1e-2") == [Decimal("0.01")]
+    assert parse_exp("1E-2") == [Decimal("0.01")]
+    assert parse_exp("1.1E-2") == [Decimal("0.011")]
+    assert parse_exp("1.1e-2") == [Decimal("0.011")]
 
     with pytest.raises(ParseError, match=r'Error at index 6, unexpected char "="'):
         parse_exp("1 + 1 = ")

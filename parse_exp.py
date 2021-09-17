@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from mytypes import ArgList, ParseError
 
 S_INITIAL = 0
@@ -49,7 +51,7 @@ def parse_exp(s: str) -> ArgList:
         if state == S_NUM_INT_DIGIT:
             if char == 0 or is_space:
                 state = S_INITIAL
-                args.append(int(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 continue
 
             if is_digit:
@@ -58,7 +60,7 @@ def parse_exp(s: str) -> ArgList:
 
             if is_operator:
                 state = S_INITIAL
-                args.append(int(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 args.append(s[i])
                 continue
 
@@ -82,7 +84,7 @@ def parse_exp(s: str) -> ArgList:
         if state == S_NUM_FRAC_DIGIT:
             if char == 0 or is_space:
                 state = S_INITIAL
-                args.append(float(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 continue
 
             if is_digit:
@@ -91,7 +93,7 @@ def parse_exp(s: str) -> ArgList:
 
             if is_operator:
                 state = S_INITIAL
-                args.append(float(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 args.append(s[i])
                 continue
 
@@ -122,7 +124,7 @@ def parse_exp(s: str) -> ArgList:
         if state == S_NUM_EXP_DIGIT:
             if char == 0 or is_space:
                 state = S_INITIAL
-                args.append(float(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 continue
 
             if is_digit:
@@ -131,7 +133,7 @@ def parse_exp(s: str) -> ArgList:
 
             if is_operator:
                 state = S_INITIAL
-                args.append(float(s[start:i]))
+                args.append(Decimal(s[start:i]))
                 args.append(s[i])
                 continue
 

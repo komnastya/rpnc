@@ -1,7 +1,8 @@
+from decimal import Decimal
 from typing import List, Literal, Union
 
 Operator = Literal["+", "-", "*", "/"]
-Arg = Union[int, float, Operator]
+Arg = Union[Decimal, Operator]
 ArgList = List[Arg]
 
 

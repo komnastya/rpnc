@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import List
 
 from mytypes import ArgError, ArgList
@@ -10,7 +11,7 @@ def print_infix_exp(args: ArgList) -> str:
     if len(args) == 1:
         return str(args[0])
     for arg in args:
-        if type(arg) == int or type(arg) == float:
+        if type(arg) == Decimal:
             stack.append(str(arg))
         else:
             if len(stack) >= 2:
