@@ -47,9 +47,17 @@ def roman_to_int(s: str) -> int:
             number += 100
             i += 1
             continue
+        if s[i] == "D":
+            number += 500
+            i += 1
+            continue
         if s[i] == "M":
             number += 1000
             i += 1
             continue
+        if s[i] == "\0":
+            break
+
+        assert False
 
     return number
