@@ -1,7 +1,8 @@
 from decimal import Decimal
 from typing import cast
 
-from mytypes import ArgList, ParseError, Operator
+from mytypes import ArgList, Operator, ParseError
+from romantoint import roman_to_int
 
 S_INITIAL = 0
 S_NUM_INT_DIGIT = 1
@@ -10,6 +11,7 @@ S_NUM_FRAC_DIGIT = 3
 S_NUM_EXP = 4
 S_NUM_EXP_SIGN = 5
 S_NUM_EXP_DIGIT = 6
+S_ROMAN_DIGIT = 7
 
 
 def parse_exp(s: str) -> ArgList:
@@ -24,6 +26,7 @@ def parse_exp(s: str) -> ArgList:
         is_dot = char == 46
         is_exp = char in [69, 101]
         is_exp_sign = char in [43, 45]
+        is_roman = char in [67, 68, 73, 76, 77, 86, 88]
 
         def error_message():
             if char == 0:
@@ -45,6 +48,11 @@ def parse_exp(s: str) -> ArgList:
             if is_operator:
                 state = S_INITIAL
                 args.append(cast(Operator, s[i]))
+                continue
+
+            if is_roman:
+                state = S_ROMAN_DIGIT
+                start = i
                 continue
 
             raise ParseError(error_message())
@@ -139,6 +147,22 @@ def parse_exp(s: str) -> ArgList:
                 continue
 
             raise ParseError(error_message())
+
+        if state == S_ROMAN_DIGIT:
+            if char == 0 or is_space:
+                state = S_INITIAL
+                args.append(Decimal(roman_to_int(s[start:i])))
+                continue
+
+            if is_roman:
+                state = S_ROMAN_DIGIT
+                continue
+
+            if is_operator:
+                state = S_INITIAL
+                args.append(Decimal(roman_to_int(s[start:i])))
+                args.append(cast(Operator, s[i]))
+                continue
 
         assert False  # Unreachable code.
 
