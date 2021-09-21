@@ -1,11 +1,11 @@
 from decimal import Decimal
-from typing import Iterable, Union
+from typing import List, Iterable, Union
 
 from mytypes import Arg, ArgError
 
 
 def calc(args: Iterable[Arg]) -> Union[Decimal]:
-    stack = []
+    stack: List[Decimal] = []
     for arg in args:
 
         def check_stack_len(num_args):

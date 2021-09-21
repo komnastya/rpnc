@@ -1,6 +1,7 @@
 from decimal import Decimal
+from typing import cast
 
-from mytypes import ArgList, ParseError
+from mytypes import ArgList, ParseError, Operator
 
 S_INITIAL = 0
 S_NUM_INT_DIGIT = 1
@@ -12,7 +13,7 @@ S_NUM_EXP_DIGIT = 6
 
 
 def parse_exp(s: str) -> ArgList:
-    args = []
+    args: ArgList = []
     state = S_INITIAL
     start = 0
     for i, c in enumerate(s + "\0"):
@@ -43,7 +44,7 @@ def parse_exp(s: str) -> ArgList:
 
             if is_operator:
                 state = S_INITIAL
-                args.append(s[i])
+                args.append(cast(Operator, s[i]))
                 continue
 
             raise ParseError(error_message())
@@ -61,7 +62,7 @@ def parse_exp(s: str) -> ArgList:
             if is_operator:
                 state = S_INITIAL
                 args.append(Decimal(s[start:i]))
-                args.append(s[i])
+                args.append(cast(Operator, s[i]))
                 continue
 
             if is_dot:
@@ -94,7 +95,7 @@ def parse_exp(s: str) -> ArgList:
             if is_operator:
                 state = S_INITIAL
                 args.append(Decimal(s[start:i]))
-                args.append(s[i])
+                args.append(cast(Operator, s[i]))
                 continue
 
             if is_exp:
@@ -134,7 +135,7 @@ def parse_exp(s: str) -> ArgList:
             if is_operator:
                 state = S_INITIAL
                 args.append(Decimal(s[start:i]))
-                args.append(s[i])
+                args.append(cast(Operator, s[i]))
                 continue
 
             raise ParseError(error_message())
