@@ -1,7 +1,7 @@
 from romantoint import roman_to_int
 
 
-def test_romantoint():
+def test_roman_to_int():
     assert roman_to_int("") == 0
     assert roman_to_int("I") == 1
     assert roman_to_int("IV") == 4
