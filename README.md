@@ -1,6 +1,6 @@
 # Reverse Polish Notation Calculator
 
-A calculator which evaluates expressions written in Reverse Polish Notation.
+A calculator which evaluates expressions written in [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation).
 
 Example:
 
